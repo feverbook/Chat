@@ -1,0 +1,198 @@
+body {
+  background: linear-gradient(rgba(49, 52, 89, 1), rgba(35, 35, 67, 1) 40%);
+  height: 100vh;
+  width: 100%;
+  background-attachment: fixed;
+  margin: 0px;
+}
+
+#root {
+  color: rgba(129, 130, 164, 1);
+  padding: 70px 0 70px 0;
+
+}
+
+.background {
+  overflow: hidden;
+}
+
+.friends {
+  margin: 0 0 10px 0;
+}
+
+.gravatar {
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+  border-radius: 25px 25px 25px 25px;
+  margin: 10px 5px 0 30px;
+}
+
+.words {
+  display: inline-block;
+  font-size: 9px;
+  margin: 0 0 3px 0;
+
+}
+
+.f-words {
+  max-width: 15em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reminder {
+  height: 20px;
+  width: 20px;
+  background-color: rgba(225, 81, 111, 1);
+
+  border-radius: 25px 25px 25px 25px;
+  float: right;
+  margin: 13px 15px 13px 10px;
+  position: relative;
+  top: 2px;
+}
+
+.reminder p {
+  height: 20px;
+  width: 20px;
+  color: #fff;
+  margin: 0;
+  font-size: 10px;
+  text-align: center;
+  padding: 2px 0 2px 0;
+
+
+
+}
+
+.searchBar {
+  width: 100%;
+  height: 50px;
+  background-color: rgba(60, 64, 101, 1);
+  position: fixed;
+  top: 0;
+  left:0;
+  display: inline-block
+}
+
+input.inbox {
+  width: 60%;
+  height: 50px;
+  background-color: rgba(60, 64, 101, 1);
+  padding: 0px 0 0px 10px;
+  border: 0;
+  display: inline-block;
+  margin: 0 0 0 20px;
+
+}
+
+div.inbox {
+  height: 20px;
+  width: 20px;
+  display: inline;
+  float: right;
+  margin: 14px 20px 14px 0;
+  border: 1px solid;
+  border-radius: 25px 25px 25px 25px;
+  text-align: center;
+  font-size: 12px;
+
+}
+
+.searchBar input {
+  display: inline-block;
+  width: 70%;
+  height: 100%;
+  background-color: rgba(60, 64, 101, 1);
+  color: rgba(129, 130, 164, 1);
+}
+
+.goback {
+  height: 25px;
+  width: 25px;
+  background-color: rgba(60, 64, 101, 1);
+  display: inline-block;
+  margin: 10px;
+  vertical-align: middle;
+  color: rgba(129, 130, 164, 1);
+  text-decoration: none;
+}
+
+.cion {
+  height: 25px;
+  width: 25px;
+  background-color: rgba(60, 64, 101, 1);
+  display: inline-block;
+  margin: 10px;
+  vertical-align: middle;
+  color: rgba(129, 130, 164, 1);
+}
+
+.search {
+  width: 70%;
+  height: 100%;
+  border: 0px;
+  padding: 0px;
+  background-color: rgba(60, 64, 101, 1);
+
+}
+
+
+
+.dialog {
+  height: 30px;
+  width: 60%;
+  background-color: rgba(225, 81, 111, 1);
+  margin: 10px 20px 10px 20px;
+  font-size: 12px;
+  color: #fff;
+  padding: 17px;
+}
+
+.time {
+  font-size: 10px;
+  color: rgba(129, 130, 164, 1);
+  display: inline-block;
+  text-align: center
+}
+
+.right {
+  background-color: rgba(225, 81, 111, 1);
+  float: right;
+  border-radius: 25px 25px 5px 25px;
+  height: 100%;
+}
+
+.left {
+  background-color: rgba(46, 48, 82, 1);
+  float: left;
+  border-radius: 25px 25px 25px 5px;
+  height: 100%;
+
+}
+
+.kbback {
+  background-color: rgba(60, 64, 101, 1);
+  width: 100%;
+  height: 30px;
+
+
+  padding: 20px 0 20px 0;
+  position: fixed;
+  bottom: 0px;
+  left:0px;
+}
+
+.keyboard {
+  width: 80%;
+  height: 30px;
+  background-color: rgb(51, 51, 95);
+  color: #fff;
+  position: absolute;
+  bottom: 0px;
+  margin: 20px 0 20px 10%;
+  padding: 0px;
+  border: 0px;
+  border-radius: 25px;
+}

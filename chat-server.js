@@ -38,6 +38,45 @@ app.get('/abc/pic/QQ20180116215459', function (req, res) {
     res.sendFile(__dirname + "/src/" + "QQ20180116215459.jpg");
 })
 
+
+
+app.get('/abc/data/time', function (req, res) {
+    res.send([
+        moment().format('YYYY-MM-DD HH:mm:ss').toString()
+    ]);
+
+})
+
+//入口页面
+app.get('/Entrance', function (req, res) {
+    res.sendFile(__dirname + "/public/" + "index.html");
+})
+
+app.get('/entra/pic/001', function (req, res) {
+    res.sendFile(__dirname + "/src/" + "001.jpg");
+})
+
+app.get('/entra/pic/002', function (req, res) {
+    res.sendFile(__dirname + "/src/" + "002.jpg");
+})
+
+app.get('/entra/pic/003', function (req, res) {
+    res.sendFile(__dirname + "/src/" + "003.jpg");
+})
+
+app.get('/entra/pic/004', function (req, res) {
+    res.sendFile(__dirname + "/src/" + "004.jpg");
+})
+
+io.on('connection', function (socket) {
+    socket.on('favorite-name', function (msg) {//事件名“favorite-name”,事件内容函数
+        console.log('message: ' + msg);
+    });
+    socket.on("check-name",(valuemsg)=>{socket.broadcast.emit("check-name",valuemsg)});//选好的用户名
+});
+
+
+//聊天页面
 app.get('/abc/data/people', function (req, res) {
     res.send([{
         "name": "Hafid Fachrudin",
@@ -75,21 +114,6 @@ app.get('/abc/data/people', function (req, res) {
     ])
 })
 
-app.get('/abc/data/time', function (req, res) {
-    res.send([
-        moment().format('YYYY-MM-DD HH:mm:ss').toString()
-    ]);
-
-})
-
-app.get('/Entrance', function (req, res) {
-    res.sendFile(__dirname + "/public/" + "index.html");
-})
-
-app.get('/entra/pic/QQ20180116215459', function (req, res) {
-    res.sendFile(__dirname + "/src/" + "QQ20180116215459.jpg");
-})
-
 io.on('connection', function (socket) {//相当于用户连上了网络
     console.log('a user connected');
 });
@@ -104,12 +128,12 @@ io.on('connection', function (socket) {
 app.get('/abc/data/words', function (req, res) {
     res.send([
         { content: "今天天气真好呀~", type: "left" },
-        { content: "有好吃的吗？", type: "left" },
+       /* { content: "有好吃的吗？", type: "left" },
         { content: "要跟我聊天吗？", type: "left" },
         { content: "路上有个汪汪", type: "left" },
         { content: "好呀~", type: "left" },
         { content: "真可爱！", type: "left" },
-        { content: "(｡･∀･)ﾉﾞ嗨", type: "left" },
+        { content: "(｡･∀･)ﾉﾞ嗨", type: "left" },*/
     ]);
 
 })

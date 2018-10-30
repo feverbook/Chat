@@ -11,6 +11,8 @@ import './main.css';//使用require导入css文件
 import ioClient from 'socket.io-client';
 
 
+//import './entra.css';
+
 
 class App extends Component {
   render() {
@@ -41,23 +43,42 @@ const Basic = () => (
 class Entrance extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
+    this.state = { value: "请输入你喜欢的名字" };
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
 
   }
 
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+
+  }
+
+
+  onSubmit(event) {
+    event.preventDefault();
+    
+    this.socket.emit("favorite-name", this.state.value);//对应服务器同名事件，发送内容至服务器
+    this.socket.emit("check-name", this.state.value);//发送聊天内容
+
+  }
+
   render() {
     return (
-      <div>
-        <img src={"/entra/pic/QQ20180116215459"} />
-        <img src={"/entra/pic/001"} />
-        <img src={"/entra/pic/002"} />
-        <img src={"/entra/pic/QQ20180116215459"} />
-        <img src={"/entra/pic/QQ20180116215459"} />
-        <div></div>
+      <div className="head-portrait">
+        <div className="hp-pic">
+          <img src={"/entra/pic/001"} />
+          <img src={"/entra/pic/002"} />
+          <img src={"/entra/pic/003"} />
+          <img src={"/entra/pic/004"} />
+        </div>
+        <form className="Favorite-name" onSubmit={this.onSubmit}>
+          <input className="name" value={this.state.value} onChange={this.handleChange} />
+        </form>
+
       </div>
     )
   }
@@ -209,7 +230,7 @@ class Words extends React.Component {
     this.socket.emit('chat message', this.state.value);//对应服务器同名事件，发送内容至服务器
     this.socket.emit("chatTime", this.state.value);//发送聊天内容
 
-    this.setState({ value: "" }, () => {
+    this.setState({ value: "" }, () => {//固定底部
       let rootHeight = document.getElementById("root").offsetHeight;
       window.scroll(0, rootHeight)
     });

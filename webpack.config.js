@@ -9,6 +9,7 @@ module.exports = {
         path: __dirname,//nodejs提供给模块的特殊变量，绝对路径
         filename: "Chat.js"//打包后生成的整合文件
     },
+    mode: "production",
     module: {
         rules: [
             {
@@ -33,7 +34,7 @@ module.exports = {
             }]
 
     },
-    devtool: "eval-source-map",
+   // devtool: "eval-source-map",导致压缩不起效
     devServer: {
         contentBase: "./public",//本地服务器所加载的页面所在的目录
         historyApiFallback: true,//不跳转

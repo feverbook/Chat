@@ -13,7 +13,6 @@ import ioClient from 'socket.io-client';
 
 //import './entra.css';
 
-
 class App extends Component {
   render() {
     return (
@@ -43,13 +42,14 @@ const Basic = () => (
 class Entrance extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "请输入你喜欢的名字" };
+    this.state = { value: "请输入你喜欢的名字", light: 0, };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-
+    console.log(1);
   }
 
   handleChange(event) {
@@ -60,20 +60,28 @@ class Entrance extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    
-    this.socket.emit("favorite-name", this.state.value);//对应服务器同名事件，发送内容至服务器
-    this.socket.emit("check-name", this.state.value);//发送聊天内容
+    localStorage.setItem('Myusername', this.state.value);//获取用户名
+    let username = localStorage.getItem("Myusername");
+    console.log(username);
+    let userpic = localStorage.getItem('Myimage');
+    console.log(userpic);
+  }
 
+  onClick(event) {
+    localStorage.setItem('Myimage', event.target.src);
+    let userpic = localStorage.getItem('Myimage');
+    this.setState({ light: parseInt(event.target.name) });//转数字
   }
 
   render() {
+    const { light } = this.state;
     return (
       <div className="head-portrait">
         <div className="hp-pic">
-          <img src={"/entra/pic/001"} />
-          <img src={"/entra/pic/002"} />
-          <img src={"/entra/pic/003"} />
-          <img src={"/entra/pic/004"} />
+          <img src={"/entra/pic/001"} style={light === 1 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='1' />
+          <img src={"/entra/pic/002"} style={light === 2 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='2' />
+          <img src={"/entra/pic/003"} style={light === 3 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='3' />
+          <img src={"/entra/pic/004"} style={light === 4 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='4' />
         </div>
         <form className="Favorite-name" onSubmit={this.onSubmit}>
           <input className="name" value={this.state.value} onChange={this.handleChange} />
@@ -97,7 +105,7 @@ class People extends React.Component {
   }
 
   onClick() {
-    window.location.href = "/";
+    this.props.history.push('/');//配合react-router使用
   }
 
 
@@ -149,7 +157,7 @@ class Friend extends React.Component {
         <input className={"inbox"} value="inbox" />
         <div className={"inbox"} >?</div>
       </div>
-      {peoplelist.map((item, i) => <People key={i} name={item.name} distance={item.distance} IndividualResume={item.IndividualResume} />)}
+      {peoplelist.map((item, i) => <People key={i} name={item.name} distance={item.distance} IndividualResume={item.IndividualResume} history={this.props.history} />)}
 
     </div>)
   }
@@ -189,7 +197,7 @@ class Opposite extends React.Component {
 class Words extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "", chatlist: [{ type: "right", content: "my words" }], searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }] };
+    this.state = { value: "", chatlist: [{ type: "right", content: "my words",src:localStorage.getItem('Myimage'),name:"Lily"}], searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }]};
     this.handleChange = this.handleChange.bind(this);
     this.searchChange = this.searchChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -212,7 +220,7 @@ class Words extends React.Component {
       this.setState({ chatlist: this.state.chatlist });
     });
 
-
+    console.log(localStorage.getItem('Myimage'));
   }
 
   handleChange(event) {
@@ -223,7 +231,7 @@ class Words extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.state.chatlist.push({ type: "right", content: this.state.value }, this.state.tlakvalue[Math.floor(Math.random() * 7)]);
+    this.state.chatlist.push({ type: "right", content: this.state.value });
 
     // this.state.chatlist.push(this.state.tlakvalue);
     console.log(this.state.chatlist);
@@ -256,11 +264,12 @@ class Words extends React.Component {
           <div className="cion">!</div>
         </div>
 
-        {chatlist.map((item, i) => <p key={i} className={"dialog " + item.type}> {item.content}  </p>)}{/*自己的内容*/}
-
-        {/*<p className={"dialog " + item.tpye}>{this.state.tlakvalue.content}</p>/*对方的内容*/}
-
-
+        {chatlist.map((item, i) =>
+        <div key={i}>
+        <p className={"dialog " + item.type}> {item.content}  </p>
+        <img src={item.src} className={"avatar "+item.type}/>
+        </div>
+        )}{/*自己的内容*/}
 
         <div className="kbback">
           <form onSubmit={this.onSubmit}>
@@ -278,4 +287,12 @@ class Words extends React.Component {
 export default Basic;
 
 render(<Basic />, document.getElementById('root'));
+
+//储存头像
+function populateStorage() {
+  localStorage.setItem('Myimage', 'myCat.png');
+  localStorage.setItem('Myusername', 'Lily');
+}
+
+let username = localStorage.getItem("Myusername");
 

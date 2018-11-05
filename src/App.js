@@ -197,7 +197,11 @@ class Opposite extends React.Component {
 class Words extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "", chatlist: [{ type: "right", content: "my words",src:localStorage.getItem('Myimage'),name:"Lily"}], searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }]};
+    this.state = {
+      value: "",
+      chatlist: [{ type: "right", content: "my words", src: localStorage.getItem('Myimage'), name: "Lily" }, { type: "left", content: "her words", src: localStorage.getItem('Myimage'), name: "Ann" }],
+      searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }]
+    };
     this.handleChange = this.handleChange.bind(this);
     this.searchChange = this.searchChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -216,7 +220,7 @@ class Words extends React.Component {
     this.socket = ioClient();
     this.socket.on("chatTime", (valuemsg) => {
       console.log(valuemsg);
-      this.state.chatlist.push({ type: "left", content: valuemsg });
+      this.state.chatlist.push({ type: valuemsg.type, name: valuemsg.name, src: valuemsg.src, content: valuemsg.content, });
       this.setState({ chatlist: this.state.chatlist });
     });
 
@@ -225,18 +229,15 @@ class Words extends React.Component {
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-
   }
-
 
   onSubmit(event) {
     event.preventDefault();
-    this.state.chatlist.push({ type: "right", content: this.state.value });
-
+    this.state.chatlist.push({ type: "right", content: this.state.value, src: localStorage.getItem('Myimage'), name: "Lily" });//本地
     // this.state.chatlist.push(this.state.tlakvalue);
     console.log(this.state.chatlist);
     this.socket.emit('chat message', this.state.value);//对应服务器同名事件，发送内容至服务器
-    this.socket.emit("chatTime", this.state.value);//发送聊天内容
+    this.socket.emit("chatTime", { type: "left", name: "Myname", src: localStorage.getItem('Myimage'), content: this.state.value });//发送聊天内容
 
     this.setState({ value: "" }, () => {//固定底部
       let rootHeight = document.getElementById("root").offsetHeight;
@@ -249,12 +250,8 @@ class Words extends React.Component {
 
   }
 
-
-
-
   render() {
     const chatlist = this.state.chatlist;
-
 
     return (
       <div className="background" >
@@ -265,11 +262,15 @@ class Words extends React.Component {
         </div>
 
         {chatlist.map((item, i) =>
-        <div key={i}>
-        <p className={"dialog " + item.type}> {item.content}  </p>
-        <img src={item.src} className={"avatar "+item.type}/>
-        </div>
-        )}{/*自己的内容*/}
+          <div key={i} className={"user" + item.type}>
+            <p className={"username" + item.type}>{item.name}</p>
+            <div className={"Align-" + item.type}>
+              <p className={"dialog " + item.type}> {item.content}  </p>
+              <img src={item.src} className={"avatar " + item.type} />
+            </div>
+
+          </div>
+        )}
 
         <div className="kbback">
           <form onSubmit={this.onSubmit}>

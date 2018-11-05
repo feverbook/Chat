@@ -142,12 +142,15 @@ div.inbox {
 
 .dialog {
   height: 30px;
-  width: 60%;
+  max-width: 70%;
   background-color: rgba(225, 81, 111, 1);
-  margin: 10px 20px 10px 20px;
+  margin: 0 0 0 0;
   font-size: 12px;
   color: #fff;
   padding: 17px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
 }
 
 .time {
@@ -157,19 +160,20 @@ div.inbox {
   text-align: center
 }
 
-.right {
-  background-color: rgba(225, 81, 111, 1);
-  float: right;
-  border-radius: 25px 25px 5px 25px;
+ .right {
+background-color: rgba(225, 81, 111, 1);
+ /* float: right;*/
+border-radius: 25px 5px 25px 25px;
   height: 100%;
+  
 }
 
 .left {
   background-color: rgba(46, 48, 82, 1);
-  float: left;
-  border-radius: 25px 25px 25px 5px;
+  float: none;
+  border-radius: 5px 25px 25px 25px;
   height: 100%;
-
+  
 }
 
 .kbback {
@@ -235,7 +239,54 @@ div.inbox {
 
 }
 
+.userleft {
+  display: inline-block;
+  width: 70%;
+  margin: 0 0 0 0;
+  float: left;
+}
+
+.userright {
+  display: inline-block;
+  width:70%;
+  margin: 0 0 0 0;
+  float: right;
+}
+
 .avatar {
-width: 50px;
-height: 50px;
+width: 35px;
+height: 35px;
+margin: 0 10px 0 10px;
+border-radius: 25px;
+margin: 0 10px 0 10px;
+display: inline-block;
+vertical-align: top;
+
+}
+
+.userleft img {
+float: left;
+}
+
+
+.usernameright {
+  font-size:10px;
+  margin: 0 55px 10px 0;
+ text-align: right;
+}
+
+.usernameleft {
+  font-size:10px;
+  margin: 0 0 10px 55px;
+ text-align: left;
+}
+
+.Align-right {
+text-align: right;
+
+}
+
+.Align-left {
+text-align: left;
+
 }

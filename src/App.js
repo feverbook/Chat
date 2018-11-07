@@ -26,14 +26,16 @@ const Basic = () => (
 class Entrance extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "请输入你喜欢的名字", light: 0, };
+    this.state = { value: "", light: 0, };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.onClick = this.onClick.bind(this)
   }
 
   componentDidMount() {
-    localStorage.getItem("Myusername")&&localStorage.getItem("Myimage")!=""? this.props.history.push('/Entrance'): this.props.history.push('/');
+    if (localStorage.getItem("Myusername") && localStorage.getItem("Myimage") && !localStorage.getItem("Myusername") == "请输入你喜欢的名字") {
+      this.props.history.push('/');
+    }
   }
 
   handleChange(event) {
@@ -41,18 +43,26 @@ class Entrance extends React.Component {
 
   }
 
-
-  onSubmit(event) {
-    localStorage.setItem('Myusername', this.state.value);//获取用户名
-    let username = localStorage.getItem("Myusername");
-    let userpic = localStorage.getItem('Myimage');
-    this.props.history.push('/');//配合react-router使用
-  }
-
   onClick(event) {
     localStorage.setItem('Myimage', event.target.src);
     let userpic = localStorage.getItem('Myimage');
     this.setState({ light: parseInt(event.target.name) });//转数字
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    localStorage.setItem('Myusername', this.state.value);//获取用户名
+    let username = localStorage.getItem("Myusername");
+    let userpic = localStorage.getItem('Myimage');
+    if (!username) {
+      alert("请输入用户名");
+      return;
+    };
+    if (!userpic) {
+      alert("请选择头像");
+      return;
+    };
+    this.props.history.push('/');//配合react-router使用
   }
 
   render() {
@@ -66,7 +76,7 @@ class Entrance extends React.Component {
           <img src={"/entra/pic/004"} style={light === 4 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='4' />
         </div>
         <form className="Favorite-name" onSubmit={this.onSubmit}>
-          <input className="name" value={this.state.value} onChange={this.handleChange} />
+          <input className="name" value={this.state.value} onChange={this.handleChange} placeholder="请输入用户名" />
         </form>
 
       </div>
@@ -126,10 +136,10 @@ class Friend extends React.Component {
   }
 
   componentWillUnmount() {
-    
+
   }
 
-  render() { 
+  render() {
     let peoplelist = this.state.peoplelist;
     return (<div>
       <div className={"searchBar " + ""} >
@@ -187,6 +197,11 @@ class Words extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("Myusername") && !localStorage.getItem("Myimage")) {
+      this.props.history.push('/Entrance');
+    }
+
+
     fetch('/abc/data/words')
       .then((response) => {
         return response.json();

@@ -13,22 +13,6 @@ import ioClient from 'socket.io-client';
 
 //import './entra.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
-
 const Basic = () => (
   <Router>
     <div>
@@ -49,7 +33,7 @@ class Entrance extends React.Component {
   }
 
   componentDidMount() {
-    console.log(1);
+    localStorage.getItem("Myusername")&&localStorage.getItem("Myimage")!=""? this.props.history.push('/Entrance'): this.props.history.push('/');
   }
 
   handleChange(event) {
@@ -59,12 +43,10 @@ class Entrance extends React.Component {
 
 
   onSubmit(event) {
-    event.preventDefault();
     localStorage.setItem('Myusername', this.state.value);//获取用户名
     let username = localStorage.getItem("Myusername");
-    console.log(username);
     let userpic = localStorage.getItem('Myimage');
-    console.log(userpic);
+    this.props.history.push('/');//配合react-router使用
   }
 
   onClick(event) {
@@ -105,7 +87,7 @@ class People extends React.Component {
   }
 
   onClick() {
-    this.props.history.push('/');//配合react-router使用
+    this.props.history.push('/Entrance');//配合react-router使用
   }
 
 
@@ -141,16 +123,13 @@ class Friend extends React.Component {
       .then((people) => {
         this.setState({ peoplelist: people });
       });
-
-
-
-    //  xhrs("/abc/data/people", (result)=>{console.log(result)}, "sendvalue");
   }
+
   componentWillUnmount() {
-    // clearInterval();
+    
   }
 
-  render() {
+  render() { 
     let peoplelist = this.state.peoplelist;
     return (<div>
       <div className={"searchBar " + ""} >
@@ -199,7 +178,7 @@ class Words extends React.Component {
     super(props);
     this.state = {
       value: "",
-      chatlist: [{ type: "right", content: "my words", src: localStorage.getItem('Myimage'), name: "Lily" }, { type: "left", content: "her words", src: localStorage.getItem('Myimage'), name: "Ann" }],
+      chatlist: [{ type: "left", content: "欢迎来到这个聊天室", src: 'http://localhost:3000/entra/pic/QQ20180116215459', name: "Ann" }],
       searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }]
     };
     this.handleChange = this.handleChange.bind(this);
@@ -215,16 +194,12 @@ class Words extends React.Component {
       .then((words) => {
         this.setState({ tlakvalue: words });
         //指向对话框内容this.setState({ tlakvalue: words[Math.floor(Math.random() * 7)] });
-        console.log(this.state.chatlist)
       });
     this.socket = ioClient();
     this.socket.on("chatTime", (valuemsg) => {
-      console.log(valuemsg);
       this.state.chatlist.push({ type: valuemsg.type, name: valuemsg.name, src: valuemsg.src, content: valuemsg.content, });
       this.setState({ chatlist: this.state.chatlist });
     });
-
-    console.log(localStorage.getItem('Myimage'));
   }
 
   handleChange(event) {
@@ -233,11 +208,9 @@ class Words extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.state.chatlist.push({ type: "right", content: this.state.value, src: localStorage.getItem('Myimage'), name: "Lily" });//本地
-    // this.state.chatlist.push(this.state.tlakvalue);
-    console.log(this.state.chatlist);
+    this.state.chatlist.push({ type: "right", content: this.state.value, src: localStorage.getItem('Myimage'), name: localStorage.getItem("Myusername") });//本地
     this.socket.emit('chat message', this.state.value);//对应服务器同名事件，发送内容至服务器
-    this.socket.emit("chatTime", { type: "left", name: "Myname", src: localStorage.getItem('Myimage'), content: this.state.value });//发送聊天内容
+    this.socket.emit("chatTime", { type: "left", content: this.state.value, src: localStorage.getItem('Myimage'), name: localStorage.getItem("Myusername") });//发送聊天内容
 
     this.setState({ value: "" }, () => {//固定底部
       let rootHeight = document.getElementById("root").offsetHeight;
@@ -283,17 +256,8 @@ class Words extends React.Component {
   }
 };
 
-
-
 export default Basic;
 
 render(<Basic />, document.getElementById('root'));
 
-//储存头像
-function populateStorage() {
-  localStorage.setItem('Myimage', 'myCat.png');
-  localStorage.setItem('Myusername', 'Lily');
-}
-
-let username = localStorage.getItem("Myusername");
 

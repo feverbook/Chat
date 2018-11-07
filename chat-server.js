@@ -68,6 +68,11 @@ app.get('/entra/pic/004', function (req, res) {
     res.sendFile(__dirname + "/src/" + "004.jpg");
 })
 
+app.get('/entra/pic/QQ20180116215459', function (req, res) {
+    res.sendFile(__dirname + "/src/" + "QQ20180116215459.jpg");
+})
+
+
 io.on('connection', function (socket) {
     socket.on('favorite-name', function (msg) {//事件名“favorite-name”,事件内容函数
         console.log('message: ' + msg);
@@ -79,38 +84,10 @@ io.on('connection', function (socket) {
 //聊天页面
 app.get('/abc/data/people', function (req, res) {
     res.send([{
-        "name": "Hafid Fachrudin",
+        "name": "Rem",
         "distance": "8m",
         "IndividualResume": "Nggih mas,leres niki kulo hafid..."
     },
-    {
-        "name": "Ibnu Mas'ud",
-        "distance": "13m",
-        "IndividualResume": "jazakallah khairan"
-    },
-    {
-        "name": "Anggit Yuniar",
-        "distance": "25m",
-        "IndividualResume": "Oh nggih saget mas"
-    },
-    {
-        "name": "Winandra Adnnan",
-        "distance": "1d",
-        "IndividualResume": "Mugi-mugi barokah"
-    },
-    {
-        "name": "Fikrun Nashih",
-        "distance": "1d",
-        "IndividualResume": "Slap mas!"
-    },
-    {
-        "name": "Langgeng Nur",
-        "distance": "2d",
-        "IndividualResume": "Nanti soto batok masih ke utara..."
-    },
-
-
-
     ])
 })
 

@@ -8,7 +8,7 @@ body {
 
 #root {
   color: rgba(129, 130, 164, 1);
-  padding: 70px 0 70px 0;
+  padding: 70px 0 90px 0;
 
 }
 
@@ -26,19 +26,20 @@ body {
   display: inline-block;
   border-radius: 25px 25px 25px 25px;
   margin: 10px 5px 0 30px;
+  vertical-align: sub;
 }
 
 .words {
   display: inline-block;
   font-size: 9px;
-  margin: 0 0 3px 0;
-
+  
 }
 
 .f-words {
   max-width: 15em;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 5px 0 5px 0;
 }
 
 .reminder {
@@ -201,6 +202,19 @@ border-radius: 25px 5px 25px 25px;
   border-radius: 25px;
 }
 
+.goEntrance {
+  height: 25px;
+  width: 25px;
+  background-color:rgba(49, 52, 89, 1);
+  display: inline-block;
+  vertical-align: middle;
+  color: rgba(129, 130, 164, 1);
+  text-decoration: none;
+  position: fixed;
+  top:0;
+  left: 0;
+}
+
 .head-portrait {
  
   text-align: center;
@@ -240,15 +254,15 @@ border-radius: 25px 5px 25px 25px;
 
 .userleft {
   display: inline-block;
-  width: 70%;
-  margin: 0 0 0 0;
+  width: 100%;
+  margin: 10px 0 0 0;
   float: left;
 }
 
 .userright {
   display: inline-block;
-  width:70%;
-  margin: 0 0 0 0;
+  width:100%;
+  margin: 10px 0 0 0;
   float: right;
 }
 
@@ -270,13 +284,13 @@ float: left;
 
 .usernameright {
   font-size:10px;
-  margin: 0 55px 10px 0;
+  margin: 0 55px 3px 0;
  text-align: right;
 }
 
 .usernameleft {
   font-size:10px;
-  margin: 0 0 10px 55px;
+  margin: 0 0 3px 55px;
  text-align: left;
 }
 

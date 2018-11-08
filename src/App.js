@@ -29,13 +29,20 @@ class Entrance extends React.Component {
     this.state = { value: "", light: 0, };
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onClick = this.onClick.bind(this)
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
-    if (localStorage.getItem("Myusername") && localStorage.getItem("Myimage") && !localStorage.getItem("Myusername") == "请输入你喜欢的名字") {
-      this.props.history.push('/');
+
+    let Mycomfirm = () => {
+      if (confirm("是否使用上次的名字跟头像？")) {
+        this.props.history.push('/')
+      } else {
+        localStorage.clear("Myimage");
+        localStorage.clear("Myusername");
+      }
     }
+    setTimeout(Mycomfirm, 1000);
   }
 
   handleChange(event) {
@@ -45,13 +52,12 @@ class Entrance extends React.Component {
 
   onClick(event) {
     localStorage.setItem('Myimage', event.target.src);
-    let userpic = localStorage.getItem('Myimage');
-    this.setState({ light: parseInt(event.target.name) });//转数字
+    this.setState({ light: parseInt(event.target.name) });
   }
 
   onSubmit(event) {
     event.preventDefault();
-    localStorage.setItem('Myusername', this.state.value);//获取用户名
+    localStorage.setItem('Myusername', this.state.value);
     let username = localStorage.getItem("Myusername");
     let userpic = localStorage.getItem('Myimage');
     if (!username) {
@@ -62,23 +68,25 @@ class Entrance extends React.Component {
       alert("请选择头像");
       return;
     };
-    this.props.history.push('/');//配合react-router使用
+    this.props.history.push('/');
   }
 
   render() {
     const { light } = this.state;
     return (
-      <div className="head-portrait">
-        <div className="hp-pic">
-          <img src={"/entra/pic/001"} style={light === 1 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='1' />
-          <img src={"/entra/pic/002"} style={light === 2 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='2' />
-          <img src={"/entra/pic/003"} style={light === 3 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='3' />
-          <img src={"/entra/pic/004"} style={light === 4 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='4' />
+      <div>
+        <a class="goEntrance" href="/Friend">←</a>
+        <div className="head-portrait">
+          <div className="hp-pic">
+            <img src={"/entra/pic/001"} style={light === 1 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='1' />
+            <img src={"/entra/pic/002"} style={light === 2 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='2' />
+            <img src={"/entra/pic/003"} style={light === 3 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='3' />
+            <img src={"/entra/pic/004"} style={light === 4 ? { border: '2px solid #FFF' } : {}} onClick={this.onClick} name='4' />
+          </div>
+          <form className="Favorite-name" onSubmit={this.onSubmit}>
+            <input className="name" value={this.state.value} onChange={this.handleChange} placeholder="请输入用户名" />
+          </form>
         </div>
-        <form className="Favorite-name" onSubmit={this.onSubmit}>
-          <input className="name" value={this.state.value} onChange={this.handleChange} placeholder="请输入用户名" />
-        </form>
-
       </div>
     )
   }
@@ -97,7 +105,7 @@ class People extends React.Component {
   }
 
   onClick() {
-    this.props.history.push('/Entrance');//配合react-router使用
+    this.props.history.push('/Entrance');
   }
 
 
@@ -108,9 +116,9 @@ class People extends React.Component {
         <div className="reminder"><p>3</p></div>
         <div className="words">
           <div className="words">{this.props.name}
-            <div className="words">·{this.props.distance}</div>
+            <div className="words">·{this.props.author}</div>
           </div>
-          <div className="f-words">{this.props.IndividualResume}</div>
+          <div className="f-words">{this.props.resume}</div>
         </div>
 
       </div>
@@ -121,7 +129,7 @@ class People extends React.Component {
 class Friend extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: "Lily", distance: "100m", IndividualResume: "NO", peoplelist: [""] };
+    this.state = { peoplelist: [""] };
 
   }
 
@@ -146,40 +154,9 @@ class Friend extends React.Component {
         <input className={"inbox"} value="inbox" />
         <div className={"inbox"} >?</div>
       </div>
-      {peoplelist.map((item, i) => <People key={i} name={item.name} distance={item.distance} IndividualResume={item.IndividualResume} history={this.props.history} />)}
+      {peoplelist.map((item, i) => <People key={i} name={item.name} author={item.author} resume={item.resume} history={this.props.history} />)}
 
     </div>)
-  }
-}
-
-//对话页面
-class Opposite extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { head: "../src/QQ图片20180116215459.jpg", value: "对方对话内容对方对话内容对方对话内容", tlaktime: [""] };
-  }
-
-  componentDidMount() {
-
-    fetch('/abc/data/time')
-      .then((response) => {
-        return response.json();
-      })
-      .then((time) => {
-        this.setState({ tlaktime: time });
-      })
-
-
-  }
-
-  render() {
-
-    return (
-      <div >
-        {/* <p className={"time"}><div className={"dialog " + this.props.className}> <p>{this.props.tlakvalue}</p></div> </p> */}
-      </div>
-
-    )
   }
 }
 
@@ -208,13 +185,18 @@ class Words extends React.Component {
       })
       .then((words) => {
         this.setState({ tlakvalue: words });
-        //指向对话框内容this.setState({ tlakvalue: words[Math.floor(Math.random() * 7)] });
       });
     this.socket = ioClient();
     this.socket.on("chatTime", (valuemsg) => {
       this.state.chatlist.push({ type: valuemsg.type, name: valuemsg.name, src: valuemsg.src, content: valuemsg.content, });
-      this.setState({ chatlist: this.state.chatlist });
+      this.setState({ chatlist: this.state.chatlist }, () => {
+        let rootHeight = document.getElementById("root").offsetHeight;
+        window.scroll(0, rootHeight);
+      });
     });
+
+
+
   }
 
   handleChange(event) {
@@ -229,7 +211,7 @@ class Words extends React.Component {
 
     this.setState({ value: "" }, () => {//固定底部
       let rootHeight = document.getElementById("root").offsetHeight;
-      window.scroll(0, rootHeight)
+      window.scroll(0, rootHeight);
     });
   }
 
@@ -244,7 +226,7 @@ class Words extends React.Component {
     return (
       <div className="background" >
         <div className="searchBar" >
-          <Link className="goback" to="/Friend">←</Link>
+          <Link className="goback" to="/Entrance">←</Link>
           <input type="text" className="search" value={this.state.searchvalue} onChange={this.searchChange} />
           <div className="cion">!</div>
         </div>

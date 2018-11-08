@@ -17,7 +17,6 @@ function transform(code) {
 
 app.get('/abc', function (req, res) {
     res.sendFile(__dirname + "/public/" + "index.html");
-    // res.send(transform('1 + 1'))
 })
 
 app.get('/abc/process_post', function (req, res) {
@@ -85,8 +84,8 @@ io.on('connection', function (socket) {
 app.get('/abc/data/people', function (req, res) {
     res.send([{
         "name": "Rem",
-        "distance": "8m",
-        "IndividualResume": "Nggih mas,leres niki kulo hafid..."
+        "author": "Nagatsuki Tappei",
+        "resume": "《Re:ゼロから始める異世界生活》"
     },
     ])
 })
@@ -105,35 +104,9 @@ io.on('connection', function (socket) {
 app.get('/abc/data/words', function (req, res) {
     res.send([
         { content: "今天天气真好呀~", type: "left" },
-       /* { content: "有好吃的吗？", type: "left" },
-        { content: "要跟我聊天吗？", type: "left" },
-        { content: "路上有个汪汪", type: "left" },
-        { content: "好呀~", type: "left" },
-        { content: "真可爱！", type: "left" },
-        { content: "(｡･∀･)ﾉﾞ嗨", type: "left" },*/
     ]);
 
 })
-
-/*
-app.post("/process_post", urlencodeParser, function (req, res) {
-    var response = {
-        "first_name": req.body.first_name,
-        "last_name": req.body.last_name
-    };
-    console.log(response);
-   res.end(JOSN.stringify(response));
-})
-
-app.get('/process_get', function (req, res) {
-    var response = {
-        "first_name": req.query.first_name,
-        "last_name": req.query.last_name
-    };
-    console.log(response);
-    res.end(JSON.stringify(response));
-})
-*/
 
 http.listen(3000, function () {//使 http 服务器监听端口 3000。
     console.log('listening on *:3000');

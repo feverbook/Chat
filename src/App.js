@@ -35,11 +35,10 @@ class Entrance extends React.Component {
   componentDidMount() {
 
     let Mycomfirm = () => {
-      if (confirm("是否使用上次的名字跟头像？")) {
+      if (localStorage.getItem("Myimage") && localStorage.getItem("Myusername") && confirm("是否使用上次的名字跟头像？")) {
         this.props.history.push('/')
       } else {
-        localStorage.clear("Myimage");
-        localStorage.clear("Myusername");
+        localStorage.clear();
       }
     }
     setTimeout(Mycomfirm, 1000);
@@ -165,7 +164,7 @@ class Words extends React.Component {
     super(props);
     this.state = {
       value: "",
-      chatlist: [{ type: "left", content: "欢迎来到这个聊天室", src: 'http://localhost:3000/entra/pic/QQ20180116215459', name: "Ann" }],
+      chatlist: [{ type: "left", content: "欢迎来到这个聊天室", src: '/entra/pic/QQ20180116215459', name: "Rem" }],
       searchvalue: "P.Ghani", tlakvalue: [{ type: "left", content: "对方的话" }]
     };
     this.handleChange = this.handleChange.bind(this);

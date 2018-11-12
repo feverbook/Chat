@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import moment from 'moment';
-//import logo from './logo.svg';
-
+//import moment from 'moment';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-
-import config from './config.json';
-import './main.css';//使用require导入css文件
+import './main.css';
 import ioClient from 'socket.io-client';
-
-
-//import './entra.css';
 
 const Basic = () => (
   <Router>
@@ -44,9 +36,11 @@ class Entrance extends React.Component {
     setTimeout(Mycomfirm, 1000);
   }
 
+  componentWillUnmount() {
+  }
+
   handleChange(event) {
     this.setState({ value: event.target.value });
-
   }
 
   onClick(event) {
@@ -99,19 +93,19 @@ class People extends React.Component {
   }
 
   componentDidMount() {
-    console.log('123');
+  }
 
+  componentWillUnmount() {
   }
 
   onClick() {
     this.props.history.push('/Entrance');
   }
 
-
   render() {
     return (
       <div className="friends" onClick={this.onClick}>
-        <img src={"/abc/pic/QQ20180116215459"} className="gravatar" />
+        <img src={"/entra/pic/QQ20180116215459"} className="gravatar" />
         <div className="reminder"><p>3</p></div>
         <div className="words">
           <div className="words">{this.props.name}
@@ -129,7 +123,6 @@ class Friend extends React.Component {
   constructor(props) {
     super(props);
     this.state = { peoplelist: [""] };
-
   }
 
   componentDidMount() {
@@ -143,7 +136,6 @@ class Friend extends React.Component {
   }
 
   componentWillUnmount() {
-
   }
 
   render() {
@@ -177,7 +169,6 @@ class Words extends React.Component {
       this.props.history.push('/Entrance');
     }
 
-
     fetch('/abc/data/words')
       .then((response) => {
         return response.json();
@@ -185,6 +176,7 @@ class Words extends React.Component {
       .then((words) => {
         this.setState({ tlakvalue: words });
       });
+
     this.socket = ioClient();
     this.socket.on("chatTime", (valuemsg) => {
       this.state.chatlist.push({ type: valuemsg.type, name: valuemsg.name, src: valuemsg.src, content: valuemsg.content, });
@@ -193,9 +185,9 @@ class Words extends React.Component {
         window.scroll(0, rootHeight);
       });
     });
+  }
 
-
-
+  componentWillUnmount() {
   }
 
   handleChange(event) {
@@ -216,7 +208,6 @@ class Words extends React.Component {
 
   searchChange(event) {
     this.setState({ searchvalue: event.target.value });
-
   }
 
   render() {

@@ -78,19 +78,21 @@ body {
 }
 
 input.inbox {
-  width: 60%;
+  width: 70%;
   height: 50px;
   background-color: rgba(60, 64, 101, 1);
   padding: 0px 0 0px 10px;
   border: 0;
   display: inline-block;
-  margin: 0 0 0 20px;
+  margin: 0 20px 0 15px;
 
 }
 
 div.inbox {
-  display: inline;
-  margin: 14px 20px 14px 0;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  margin: 14px 20px 14px 20px;
   border: 1px solid;
   border-radius: 25px 25px 25px 25px;
   text-align: center;
@@ -125,6 +127,7 @@ div.inbox {
   margin: 10px;
   vertical-align: middle;
   color: rgba(129, 130, 164, 1);
+  text-align: right;
 }
 
 .search {

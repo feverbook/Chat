@@ -29,8 +29,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack",
-    "server": "webpack-dev-server --open"
+    "start": "node chat-server.js",
+    "bulid": "webpack"
   },
   "author": "Wang",
   "license": "ISC"

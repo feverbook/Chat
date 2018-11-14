@@ -1,5 +1,5 @@
 # Chat
-这是一个Live chat
+你可以进入一个匿名聊天室，与朋友们在线聊天。
 
 # Live Demo
 http://m.forek.cc:3000/Entrance
@@ -10,5 +10,5 @@ npm install
 # 构建项目
 npm run build
 
-# 动项目
+# 启动项目
 npm run start

@@ -8,7 +8,7 @@
     "babel-preset-es2015": "^6.24.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
